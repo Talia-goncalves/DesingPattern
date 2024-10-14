@@ -4,11 +4,11 @@ public static class MonsterFactory
     {
         return type switch
         {
-            "Dragon" => new Dragon(),
-            "Zombie" => new Zombie(),
-            "Robot" => new Robot(),
-            "Golem" => new Golem(),
-            "Phoenix" => new Phoenix(),
+            "Dragon" => new Dragon { Name = "Dragon" },
+            "Zombie" => new Zombie { Name = "Zombie" },
+            "Robot" => new Robot { Name = "Robot" },
+            "Golem" => new Golem { Name = "Golem" },
+            "Phoenix" => new Phoenix { Name = "Phoenix" },
             _ => throw new ArgumentException("Invalid monster type")
         };
     }
