@@ -43,6 +43,12 @@ public class GameManager
         Console.WriteLine($"{Player1.Name}: Vida = {Player1.Health}, Pontos = {Player1.Score}");
         Console.WriteLine($"{Player2.Name}: Vida = {Player2.Health}, Pontos = {Player2.Score}");
     }
+
+    public void SetPlayers(Player player1, Player player2)
+    {
+        Player1 = player1;
+        Player2 = player2;
+    }
 }
 
 // Classe para representar o jogador

@@ -1,69 +1,92 @@
+using System;
+
 public class Battle
 {
-    public void StartBattle(Monster monster1, Monster monster2)
+    private Player Player1 { get; set; }
+    private Player Player2 { get; set; }
+
+    public Battle(Player player1, Player player2)
     {
-        Console.WriteLine($"A battle begins between {monster1.Name} and {monster2.Name}!");
+        Player1 = player1 ?? throw new ArgumentNullException(nameof(player1), "Player 1 cannot be null");
+        Player2 = player2 ?? throw new ArgumentNullException(nameof(player2), "Player 2 cannot be null");
+    }
 
-        while (monster1.Health > 0 && monster2.Health > 0)
+    public void Start()
+    {
+        while (Player1.Health > 0 && Player2.Health > 0)
         {
-            // Turno do Monster1
-            PlayerTurn(monster1, monster2);
+            Console.Clear();
+            DisplayStatus();
 
-            // Verifica se o Monster2 ainda está vivo
-            if (monster2.Health <= 0)
+            // Turn for Player 1
+            PlayerTurn(Player1, Player2);
+
+            if (Player2.Health <= 0)
             {
-                Console.WriteLine($"{monster1.Name} wins!");
-                break;
+                Console.WriteLine($"{Player1.Name} venceu a batalha!");
+                return;
             }
 
-            // Turno do Monster2
-            PlayerTurn(monster2, monster1);
+            // Turn for Player 2
+            PlayerTurn(Player2, Player1);
 
-            // Verifica se o Monster1 ainda está vivo
-            if (monster1.Health <= 0)
+            if (Player1.Health <= 0)
             {
-                Console.WriteLine($"{monster2.Name} wins!");
-                break;
+                Console.WriteLine($"{Player2.Name} venceu a batalha!");
+                return;
             }
         }
     }
 
-    private void PlayerTurn(Monster attacker, Monster defender)
+    private void DisplayStatus()
     {
-        Console.WriteLine($"\n{attacker.Name}'s turn! Choose an action:");
-        Console.WriteLine("1. Attack");
-        Console.WriteLine("2. Defend");
-        Console.WriteLine("3. Use Special Move");
+        Console.WriteLine($"{Player1.Name}: Vida = {Player1.Health}");
+        Console.WriteLine($"{Player2.Name}: Vida = {Player2.Health}");
+    }
 
-        string? choice;
-        do
-        {
-            choice = Console.ReadLine();
+    private void PlayerTurn(Player attacker, Player defender)
+    {
+        Console.WriteLine($"{attacker.Name}, é sua vez!");
+        Console.WriteLine("Escolha uma ação: ");
+        Console.WriteLine("1. Atacar");
+        Console.WriteLine("2. Defender");
+        Console.WriteLine("3. Habilidade Especial");
+        string? choice = Console.ReadLine();
 
-            if (string.IsNullOrEmpty(choice) || (choice != "1" && choice != "2" && choice != "3"))
-            {
-                Console.WriteLine("Invalid choice, please choose 1, 2, or 3.");
-            }
-        } while (string.IsNullOrEmpty(choice) || (choice != "1" && choice != "2" && choice != "3"));
-
-        IAction action;
         switch (choice)
         {
             case "1":
-                action = new AttackAction();
+                Attack(attacker, defender);
                 break;
             case "2":
-                action = new DefendAction();
+                Defend(attacker);
                 break;
             case "3":
-                action = new SpecialMoveAction();
+                UseSpecialAbility(attacker, defender);
                 break;
             default:
-                action = new AttackAction(); // Não chegará aqui, mas adicionamos por segurança
+                Console.WriteLine("Ação inválida, tente novamente.");
+                PlayerTurn(attacker, defender); // Permitir que o jogador escolha novamente
                 break;
         }
+    }
 
-        action.Execute(attacker, defender);
-        Console.WriteLine($"{defender.Name}'s Health: {defender.Health}");
+    private void Attack(Player attacker, Player defender)
+    {
+        int damage = 10; // Dano padrão, pode ser alterado conforme a lógica do monstro
+        defender.Health -= damage;
+        Console.WriteLine($"{attacker.Name} atacou {defender.Name} causando {damage} de dano!");
+    }
+
+    private void Defend(Player defender)
+    {
+        Console.WriteLine($"{defender.Name} está se defendendo!");
+        // Implementar lógica de defesa se necessário
+    }
+
+    private void UseSpecialAbility(Player attacker, Player defender)
+    {
+        // Implementar a lógica para habilidades especiais
+        Console.WriteLine($"{attacker.Name} usou uma habilidade especial!");
     }
 }
