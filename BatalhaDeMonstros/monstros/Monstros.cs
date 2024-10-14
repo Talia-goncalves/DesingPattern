@@ -31,4 +31,16 @@ public abstract class Monster
         Health -= damage;
         NotifyObservers();  // Notifica que a saúde mudou
     }
+
+    public Memento SaveState()
+    {
+        return new Memento(Health, Attack, Defense);
+    }
+
+    public void RestoreState(Memento memento)
+    {
+        Health = memento.Health;
+        Attack = memento.Attack;
+        Defense = memento.Defense;
+    }
 }
