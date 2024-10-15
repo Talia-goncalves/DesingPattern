@@ -1,6 +1,6 @@
 public class Golem : Monster
 {
-    public Golem()
+    public Golem() : base("Golem")
     {
         Name = "Golem";
         Health = 150;

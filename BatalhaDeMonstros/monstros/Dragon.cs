@@ -1,8 +1,7 @@
 public class Dragon : Monster
 {
-    public Dragon()
+    public Dragon() : base("Dragon") // Passa o nome para o construtor da classe base
     {
-        Name = "Dragon";
         Health = 120;
         Attack = 40;
         Defense = 25;

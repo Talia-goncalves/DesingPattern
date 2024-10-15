@@ -1,6 +1,6 @@
 public class Zombie : Monster
 {
-    public Zombie()
+    public Zombie() : base("Zombie")
     {
         Name = "Zombie";
         Health = 80;
