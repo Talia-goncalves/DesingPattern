@@ -40,13 +40,13 @@ public class Battle
 
     private void DisplayStatus()
     {
-        Console.WriteLine($"{Player1.Name}: Vida = {Player1.Health}");
-        Console.WriteLine($"{Player2.Name}: Vida = {Player2.Health}");
+        Console.WriteLine($"{Player1.Name} ({Player1.Monster.Name}): Vida = {Player1.Health}");
+        Console.WriteLine($"{Player2.Name} ({Player2.Monster.Name}): Vida = {Player2.Health}");
     }
 
     private void PlayerTurn(Player attacker, Player defender)
     {
-        Console.WriteLine($"{attacker.Name}, é sua vez!");
+        Console.WriteLine($"{attacker.Name} ({attacker.Monster.Name}), é sua vez!");
         Console.WriteLine("Escolha uma ação: ");
         Console.WriteLine("1. Atacar");
         Console.WriteLine("2. Defender");
@@ -66,27 +66,28 @@ public class Battle
                 break;
             default:
                 Console.WriteLine("Ação inválida, tente novamente.");
-                PlayerTurn(attacker, defender); // Permitir que o jogador escolha novamente
+                PlayerTurn(attacker, defender);
                 break;
         }
     }
 
     private void Attack(Player attacker, Player defender)
     {
-        int damage = 10; // Dano padrão, pode ser alterado conforme a lógica do monstro
+        int damage = attacker.Monster.Attack - defender.Monster.Defense;
+        damage = Math.Max(damage, 0);  // Garante que o dano não seja negativo
         defender.Health -= damage;
-        Console.WriteLine($"{attacker.Name} atacou {defender.Name} causando {damage} de dano!");
+        Console.WriteLine($"{attacker.Name} ({attacker.Monster.Name}) atacou {defender.Name} ({defender.Monster.Name}) causando {damage} de dano!");
     }
 
     private void Defend(Player defender)
     {
-        Console.WriteLine($"{defender.Name} está se defendendo!");
-        // Implementar lógica de defesa se necessário
+        defender.Monster.Defense += 10;
+        Console.WriteLine($"{defender.Name} ({defender.Monster.Name}) está se defendendo e aumenta sua defesa em 10!");
     }
 
     private void UseSpecialAbility(Player attacker, Player defender)
     {
-        // Implementar a lógica para habilidades especiais
-        Console.WriteLine($"{attacker.Name} usou uma habilidade especial!");
+        attacker.Monster.SpecialMove();
+        // A lógica adicional de dano ou efeitos pode ser implementada aqui
     }
 }
