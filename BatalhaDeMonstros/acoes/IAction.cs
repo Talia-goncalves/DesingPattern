@@ -1,4 +1,4 @@
 public interface IAction
 {
-    void Execute(Monster attacker, Monster defender);
+    void Execute(Monster attacker, Monster target);
 }

@@ -1,15 +1,16 @@
-public class Zombie : Monster
+public class Zumbi : Monster
 {
-    public Zombie() : base("Zombie")
+    public Zumbi()
     {
-        Name = "Zombie";
-        Health = 80;
-        Attack = 30;
+        Name = "Zumbi";
+        Attack = 20;
         Defense = 15;
+        Health = 80;
     }
 
-    public override void SpecialMove()
+    public override void UseSpecialAbility(Monster target)
     {
-        Console.WriteLine($"{Name} uses Regeneration! Heals 20 health.");
+        Console.WriteLine($"{Name} se regenera!");
+        Health += 10; 
     }
 }

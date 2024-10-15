@@ -1,15 +1,16 @@
-public class Robot : Monster
+public class Robo : Monster
 {
-    public Robot() : base("Robot")
+    public Robo()
     {
-        Name = "Robot";
-        Health = 100;
-        Attack = 35;
-        Defense = 20;
+        Name = "Robô";
+        Attack = 25;
+        Defense = 25;
+        Health = 90;
     }
 
-    public override void SpecialMove()
+    public override void UseSpecialAbility(Monster target)
     {
-        Console.WriteLine($"{Name} uses Laser Beam! Deals 60 damage.");
+        Console.WriteLine($"{Name} dispara um laser em {target.Name}!");
+        target.Health -= Attack; 
     }
 }

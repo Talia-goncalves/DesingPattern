@@ -1,14 +1,16 @@
-public class Dragon : Monster
+public class Dragao : Monster
 {
-    public Dragon() : base("Dragon") // Passa o nome para o construtor da classe base
+    public Dragao()
     {
-        Health = 120;
-        Attack = 40;
-        Defense = 25;
+        Name = "Dragão";
+        Attack = 30;
+        Defense = 20;
+        Health = 100;
     }
 
-    public override void SpecialMove()
+    public override void UseSpecialAbility(Monster target)
     {
-        Console.WriteLine($"{Name} uses Fire Breath! Deals 50 damage.");
+        Console.WriteLine($"{Name} lança uma chama em {target.Name}!");
+        target.Health -= Attack * 2; 
     }
 }
