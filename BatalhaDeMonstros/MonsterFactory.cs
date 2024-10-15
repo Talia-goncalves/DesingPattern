@@ -1,17 +1,13 @@
-public static class MonsterFactory
+public class MonsterFactory
 {
-    public static Monster CreateMonster(string type)
+    public Monster CreateMonster(string type)
     {
-        switch (type.ToLower())
+        return type switch
         {
-            case "dragao":
-                return new Dragao();
-            case "zumbi":
-                return new Zumbi();
-            case "robo":
-                return new Robo();
-            default:
-                throw new ArgumentException("Tipo de monstro desconhecido.");
-        }
+            "Dragão" => new Dragon(),
+            "Zumbi" => new Zombie(),
+            "Robô" => new Robot(),
+            _ => throw new ArgumentException("Tipo de monstro inválido")
+        };
     }
 }

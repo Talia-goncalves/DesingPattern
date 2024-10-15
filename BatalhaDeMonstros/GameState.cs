@@ -1,11 +1,8 @@
+using System;
+
+[Serializable]
 public class GameState
 {
-    public int PlayerScore { get; set; }
-    public int EnemyScore { get; set; }
-
-    public GameState()
-    {
-        PlayerScore = 0;
-        EnemyScore = 0;
-    }
+    public Player Player { get; set; }
+    public Monster EnemyMonster { get; set; }
 }

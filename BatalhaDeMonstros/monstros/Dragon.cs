@@ -1,16 +1,11 @@
-public class Dragao : Monster
+public class Dragon : Monster
 {
-    public Dragao()
-    {
-        Name = "Dragão";
-        Attack = 30;
-        Defense = 20;
-        Health = 100;
-    }
+    public Dragon() : base("Dragão", 150, 30, 10) { }
 
     public override void UseSpecialAbility(Monster target)
     {
-        Console.WriteLine($"{Name} lança uma chama em {target.Name}!");
-        target.Health -= Attack * 2; 
+        int damage = 50; // Fogo do Dragão
+        Console.WriteLine($"{Name} usa Fogo do Dragão em {target.Name}!");
+        target.TakeDamage(damage);
     }
 }

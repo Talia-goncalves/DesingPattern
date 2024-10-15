@@ -1,8 +1,9 @@
-public class Attack : IAction
+public class AttackAction : IActionStrategy
 {
     public void Execute(Monster attacker, Monster target)
     {
-        Console.WriteLine($"{attacker.Name} ataca {target.Name}!");
-        target.Health -= attacker.Attack;
+        int damage = attacker.Attack();
+        target.TakeDamage(damage);
+        Console.WriteLine($"{attacker.Name} atacou {target.Name} e causou {damage} de dano!");
     }
 }

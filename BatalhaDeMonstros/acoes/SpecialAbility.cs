@@ -1,4 +1,4 @@
-public class SpecialAbility : IAction
+public class SpecialAbilityAction : IActionStrategy
 {
     public void Execute(Monster attacker, Monster target)
     {

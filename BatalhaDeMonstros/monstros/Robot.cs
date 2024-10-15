@@ -1,16 +1,11 @@
-public class Robo : Monster
+public class Robot : Monster
 {
-    public Robo()
-    {
-        Name = "Robô";
-        Attack = 25;
-        Defense = 25;
-        Health = 90;
-    }
+    public Robot() : base("Robô", 100, 20, 15) { }
 
     public override void UseSpecialAbility(Monster target)
     {
-        Console.WriteLine($"{Name} dispara um laser em {target.Name}!");
-        target.Health -= Attack; 
+        int damage = 40; // Ataque de Laser
+        Console.WriteLine($"{Name} usa Ataque de Laser em {target.Name}!");
+        target.TakeDamage(damage);
     }
 }

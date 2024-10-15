@@ -1,12 +1,10 @@
 [Serializable]
 public class GameMemento
 {
-    public int PlayerScore { get; set; }
-    public int EnemyScore { get; set; }
+    public GameState State { get; }
 
-    public GameMemento(int playerScore, int enemyScore)
+    public GameMemento(GameState state)
     {
-        PlayerScore = playerScore;
-        EnemyScore = enemyScore;
+        State = state;
     }
 }
