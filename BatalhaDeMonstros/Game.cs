@@ -44,7 +44,7 @@ public class Game
 
     private void NewGame()
     {
-        Console.WriteLine("Escolha seu monstro: Dragão, Zumbi, Robô");
+        Console.WriteLine("Escolha seu monstro: Elfo, Zumbi, Robô");
         string monsterType = Console.ReadLine();
 
         Monster playerMonster = _monsterFactory.CreateMonster(monsterType);
