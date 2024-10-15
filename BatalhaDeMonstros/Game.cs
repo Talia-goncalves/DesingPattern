@@ -1,5 +1,3 @@
-using System;
-
 public class Game
 {
     private MonsterFactory _monsterFactory;
@@ -53,15 +51,13 @@ public class Game
         Player player = new Player(playerMonster);
 
         Monster enemyMonster = _monsterFactory.CreateMonster("Zumbi"); // Aqui você pode gerar inimigos aleatórios
-        EnemyAI enemyAI = new EnemyAI();
-
         Battle(player, enemyMonster);
     }
 
     private void LoadGame()
     {
         Console.WriteLine("Carregando jogo...");
-        GameMemento memento = _gameSaver.Load("savegame.dat");
+        GameMemento memento = _gameSaver.Load("savegame.json");
         _gameState = memento.State;
 
         Player player = _gameState.Player;
@@ -72,6 +68,8 @@ public class Game
 
     private void Battle(Player player, Monster enemy)
     {
+        EnemyAI enemyAI = new EnemyAI(); // Crie a instância do EnemyAI aqui
+
         while (player.Monster.Health > 0 && enemy.Health > 0)
         {
             // Exibir status dos monstros
@@ -79,48 +77,30 @@ public class Game
             Console.WriteLine($"Monstro inimigo: {enemy.Name} (Vida: {enemy.Health})");
 
             // Jogador escolhe ação
-            Console.WriteLine("Escolha sua ação: 1. Atacar 2. Defender 3. Usar Habilidade Especial");
+            Console.WriteLine("Escolha uma ação: 1. Atacar, 2. Defender, 3. Usar habilidade especial");
             string actionChoice = Console.ReadLine();
-
-            IActionStrategy actionStrategy = actionChoice switch
+            IActionStrategy playerAction = actionChoice switch
             {
                 "1" => new AttackAction(),
                 "2" => new DefendAction(),
                 "3" => new SpecialAbilityAction(),
-                _ => throw new InvalidOperationException("Ação inválida.")
+                _ => throw new ArgumentOutOfRangeException()
             };
 
-            actionStrategy.Execute(player.Monster, enemy);
-
-            // Verificar se o inimigo foi derrotado
+            playerAction.Execute(player.Monster, enemy);
             if (enemy.Health <= 0)
             {
-                Console.WriteLine($"{enemy.Name} foi derrotado! Você venceu!");
-                SaveGame(player, enemy);
-                break;
+                Console.WriteLine("Você venceu!");
+                return;
             }
 
-            // Turno do inimigo
-            EnemyAI enemyAI = new EnemyAI();
+            // Inimigo faz sua jogada
             enemyAI.TakeTurn(enemy, player.Monster);
-
-            // Verificar se o jogador foi derrotado
             if (player.Monster.Health <= 0)
             {
-                Console.WriteLine($"{player.Monster.Name} foi derrotado! Você perdeu!");
+                Console.WriteLine("Seu monstro foi derrotado. Game Over!");
+                return;
             }
         }
-    }
-
-    private void SaveGame(Player player, Monster enemy)
-    {
-        GameState gameState = new GameState
-        {
-            Player = player,
-            EnemyMonster = enemy
-        };
-        GameMemento memento = new GameMemento(gameState);
-        _gameSaver.Save(memento, "savegame.dat");
-        Console.WriteLine("Jogo salvo com sucesso!");
     }
 }
