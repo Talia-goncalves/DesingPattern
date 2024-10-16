@@ -1,16 +1,17 @@
-public class Monster
+public abstract class Monster
 {
     public string Name { get; private set; }
     public int Health { get; private set; }
     public int Attack { get; private set; }
 
-    public Monster(string name, int health, int attack)
+    protected Monster(string name, int health, int attack)
     {
         Name = name;
         Health = health;
         Attack = attack;
     }
 
+    // Mantém o padrão Memento
     public Memento SaveState()
     {
         return new Memento(Name, Health, Attack);

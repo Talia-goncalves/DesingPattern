@@ -1,11 +1,13 @@
 public class Zombie : Monster
 {
-    public Zombie() : base("Zumbi", 120, 25, 5) { }
-
-    public override void UseSpecialAbility(Monster target)
+    public Zombie() : base("Zombie", 100, 15)
     {
-        int healAmount = 20; // Cura do Zumbi
-        Health += healAmount;
-        Console.WriteLine($"{Name} usa Cura e recupera {healAmount} de vida!");
+    }
+
+    public void UseSpecialAbility(Monster target)
+    {
+        // Habilidade especial do zumbi
+        Console.WriteLine($"{Name} infecta {target.Name}, causando 10 de dano!");
+        target.RestoreState(new Memento(target.Name, target.Health - 10, target.Attack));
     }
 }

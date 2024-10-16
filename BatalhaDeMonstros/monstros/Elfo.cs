@@ -1,11 +1,13 @@
 public class Elfo : Monster
 {
-    public Elfo() : base("Elfo", 150, 30, 10) { }
-
-    public override void UseSpecialAbility(Monster target)
+    public Elfo() : base("Elfo", 80, 20)
     {
-        int damage = 50; 
-        Console.WriteLine($"{Name} usa suas flechas que atingem múltiplos alvos e cega seu inimigo {target.Name}!");
-        target.TakeDamage(damage);
+    }
+
+    public void UseSpecialAbility(Monster target)
+    {
+        // Habilidade especial do elfo
+        Console.WriteLine($"{Name} dispara uma flecha mágica em {target.Name}, causando 15 de dano!");
+        target.RestoreState(new Memento(target.Name, target.Health - 15, target.Attack));
     }
 }

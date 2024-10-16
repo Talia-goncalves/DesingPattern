@@ -1,11 +1,13 @@
 public class Robot : Monster
 {
-    public Robot() : base("Robô", 100, 20, 15) { }
-
-    public override void UseSpecialAbility(Monster target)
+    public Robot() : base("Robô", 120, 25)
     {
-        int damage = 40; // Ataque de Laser
-        Console.WriteLine($"{Name} usa Ataque de Laser em {target.Name}!");
-        target.TakeDamage(damage);
+    }
+
+    public void UseSpecialAbility(Monster target)
+    {
+        // Habilidade especial do robô
+        Console.WriteLine($"{Name} dispara um laser em {target.Name}, causando 20 de dano!");
+        target.RestoreState(new Memento(target.Name, target.Health - 20, target.Attack));
     }
 }
