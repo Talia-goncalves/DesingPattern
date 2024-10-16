@@ -11,7 +11,13 @@ public abstract class Monster
         Attack = attack;
     }
 
-    // Mantém o padrão Memento
+    public void TakeDamage(int damage)
+    {
+        Health -= damage;
+        if (Health < 0) Health = 0;
+        Console.WriteLine($"{Name} sofreu {damage} de dano! Saúde restante: {Health}");
+    }
+
     public Memento SaveState()
     {
         return new Memento(Name, Health, Attack);
