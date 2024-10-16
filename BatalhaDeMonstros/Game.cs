@@ -1,13 +1,19 @@
+using System;
+using System.Collections.Generic;
+
 public class Game
 {
+    private Player player1;
+    private Player player2;
     private MonsterFactory _monsterFactory;
-    private GameSaver _gameSaver;
-    private GameState _gameState;
+    private Stack<Monster.Memento> _mementosPlayer1;
+    private Stack<Monster.Memento> _mementosPlayer2;
 
     public Game()
     {
         _monsterFactory = new MonsterFactory();
-        _gameSaver = new GameSaver();
+        _mementosPlayer1 = new Stack<Monster.Memento>();
+        _mementosPlayer2 = new Stack<Monster.Memento>();
     }
 
     public void Start()
@@ -18,89 +24,65 @@ public class Game
 
     private void MainMenu()
     {
-        Console.WriteLine("1. Novo Jogo");
-        Console.WriteLine("2. Carregar Jogo");
-        Console.WriteLine("3. Sair");
-
+        Console.WriteLine("1. Jogar contra IA");
+        Console.WriteLine("2. Jogar contra outro jogador");
         string choice = Console.ReadLine();
 
-        switch (choice)
+        if (choice == "1")
         {
-            case "1":
-                NewGame();
-                break;
-            case "2":
-                LoadGame();
-                break;
-            case "3":
-                Environment.Exit(0);
-                break;
-            default:
-                Console.WriteLine("Escolha inválida. Tente novamente.");
-                MainMenu();
-                break;
+            // Jogar contra IA, criando monstros aleatórios
+            player1 = new Player(_monsterFactory.CreateRandomMonster());
+            player2 = new Player(_monsterFactory.CreateRandomMonster()); // IA como Player 2
+            Battle(player1, player2);
+        }
+        else if (choice == "2")
+        {
+            // Jogar contra outro jogador, criando monstros aleatórios
+            player1 = new Player(_monsterFactory.CreateRandomMonster());
+            player2 = new Player(_monsterFactory.CreateRandomMonster());
+            Battle(player1, player2);
+        }
+        else
+        {
+            Console.WriteLine("Escolha inválida. Tente novamente.");
+            MainMenu(); // Repete o menu se a escolha for inválida
         }
     }
 
-    private void NewGame()
+    private void Battle(Player player1, Player player2)
     {
-        Console.WriteLine("Escolha seu monstro: Elfo, Zumbi, Robô");
-        string monsterType = Console.ReadLine();
-
-        Monster playerMonster = _monsterFactory.CreateMonster(monsterType);
-        Player player = new Player(playerMonster);
-
-        Monster enemyMonster = _monsterFactory.CreateMonster("Zumbi"); // Aqui você pode gerar inimigos aleatórios
-        Battle(player, enemyMonster);
+        // Lógica para batalha entre os jogadores
+        Console.WriteLine("Iniciando batalha entre " + player1.Monster.Name + " e " + player2.Monster.Name);
+        // Implemente a lógica de batalha aqui
     }
 
-    private void LoadGame()
+    private void SaveMonsterState(Player player)
     {
-        Console.WriteLine("Carregando jogo...");
-        GameMemento memento = _gameSaver.Load("savegame.json");
-        _gameState = memento.State;
-
-        Player player = _gameState.Player;
-        Monster enemyMonster = _gameState.EnemyMonster;
-
-        Battle(player, enemyMonster);
-    }
-
-    private void Battle(Player player, Monster enemy)
-    {
-        EnemyAI enemyAI = new EnemyAI(); // Crie a instância do EnemyAI aqui
-
-        while (player.Monster.Health > 0 && enemy.Health > 0)
+        var memento = player.Monster.SaveState();
+        if (player == player1)
         {
-            // Exibir status dos monstros
-            Console.WriteLine($"Seu monstro: {player.Monster.Name} (Vida: {player.Monster.Health})");
-            Console.WriteLine($"Monstro inimigo: {enemy.Name} (Vida: {enemy.Health})");
+            _mementosPlayer1.Push(memento);
+        }
+        else
+        {
+            _mementosPlayer2.Push(memento);
+        }
+        Console.WriteLine("Estado salvo!");
+    }
 
-            // Jogador escolhe ação
-            Console.WriteLine("Escolha uma ação: 1. Atacar, 2. Defender, 3. Usar habilidade especial");
-            string actionChoice = Console.ReadLine();
-            IActionStrategy playerAction = actionChoice switch
-            {
-                "1" => new AttackAction(),
-                "2" => new DefendAction(),
-                "3" => new SpecialAbilityAction(),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-            playerAction.Execute(player.Monster, enemy);
-            if (enemy.Health <= 0)
-            {
-                Console.WriteLine("Você venceu!");
-                return;
-            }
-
-            // Inimigo faz sua jogada
-            enemyAI.TakeTurn(enemy, player.Monster);
-            if (player.Monster.Health <= 0)
-            {
-                Console.WriteLine("Seu monstro foi derrotado. Game Over!");
-                return;
-            }
+    private void RestoreMonsterState(Player player)
+    {
+        if (player == player1 && _mementosPlayer1.Count > 0)
+        {
+            player.Monster.RestoreState(_mementosPlayer1.Pop());
+        }
+        else if (player == player2 && _mementosPlayer2.Count > 0)
+        {
+            player.Monster.RestoreState(_mementosPlayer2.Pop());
+        }
+        else
+        {
+            Console.WriteLine("Nenhum estado salvo para restaurar!");
         }
     }
 }
