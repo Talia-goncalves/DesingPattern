@@ -1,25 +1,16 @@
-using System;
-
 public class MonsterFactory
 {
-    private static readonly string[] MonsterTypes = { "elfo", "zumbi", "robô" }; // Tipos de monstros
+    private Random _random = new Random();
 
-    public Monster CreateMonster(string type)
-    {
-        return type.ToLower() switch
-        {
-            "elfo" => new Elfo(),
-            "zumbi" => new Zombie(),
-            "robô" => new Robot(),
-            _ => throw new ArgumentException("Tipo de monstro inválido")
-        };
-    }
-
-    // Método para criar um monstro aleatório
     public Monster CreateRandomMonster()
     {
-        var random = new Random();
-        string randomType = MonsterTypes[random.Next(MonsterTypes.Length)];
-        return CreateMonster(randomType);
+        int choice = _random.Next(1, 4);
+        return choice switch
+        {
+            1 => new Robot(),
+            2 => new Elfo(),
+            3 => new Zombie(),
+            _ => throw new InvalidOperationException("Opção inválida")
+        };
     }
 }
