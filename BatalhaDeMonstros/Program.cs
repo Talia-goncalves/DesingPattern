@@ -1,58 +1,21 @@
-﻿using System;
+﻿using BatalhaDeMonstros.Game;
+using BatalhaDeMonstros.Factory;
 
-class Program
+namespace BatalhaDeMonstros
 {
-    static void Main(string[] args)
+    class Program
     {
-        while (true)
+        static void Main()
         {
-            Console.Clear();
-            Console.WriteLine("=== Batalha de Monstros ===");
-            Console.WriteLine("1. Novo Jogo");
-            Console.WriteLine("2. Sair");
-            Console.Write("Escolha uma opção: ");
+            Console.WriteLine("Bem-vindo ao Jogo Batalha de Monstros!");
+            Console.WriteLine("Escolha o modo de jogo: (1) PvP (2) PvE");
+            int gameMode = int.Parse(Console.ReadLine() ?? "1");
+            bool isPvE = gameMode == 2;
 
-            string? choice = Console.ReadLine();
-
-            switch (choice)
-            {
-                case "1":
-                    StartGame();
-                    break;
-                case "2":
-                    Console.WriteLine("Saindo do jogo...");
-                    return;
-                default:
-                    Console.WriteLine("Opção inválida. Tente novamente.");
-                    break;
-            }
+            var game = new Game.Game(isPvE);
+            game.AddMonster(MonsterFactory.CreateMonster("Dragon"));
+            game.AddMonster(MonsterFactory.CreateMonster("Robot")); // Adiciona o novo monstro "Robot"
+            game.Start();
         }
-    }
-
-    static void StartGame()
-    {
-        Console.Clear();
-        Console.WriteLine("=== Novo Jogo ===");
-
-        GameManager gameManager = GameManager.Instance;
-
-        Console.Write("Digite o nome do Jogador 1: ");
-        string playerName1 = Console.ReadLine() ?? "Jogador 1";
-        Console.Write("Digite o nome do Jogador 2: ");
-        string playerName2 = Console.ReadLine() ?? "Jogador 2";
-
-        Player p1 = new Player(playerName1);
-        Player p2 = new Player(playerName2);
-
-        gameManager.SetPlayers(p1, p2);
-
-        Console.WriteLine($"{gameManager.Player1.Name} vs {gameManager.Player2.Name}");
-
-        // Inicia a batalha
-        Battle battle = new Battle(gameManager.Player1, gameManager.Player2);
-        battle.Start();
-
-        Console.WriteLine("Pressione qualquer tecla para voltar ao menu.");
-        Console.ReadKey();
     }
 }

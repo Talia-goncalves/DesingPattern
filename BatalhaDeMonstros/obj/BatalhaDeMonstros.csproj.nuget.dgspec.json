@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\TaliaGoncalves\\Desktop\\DesingPattern\\BatalhaDeMonstros\\BatalhaDeMonstros.csproj": {}
+    "C:\\Users\\Talia Gonçalves\\OneDrive\\Área de Trabalho\\DesingPattern\\BatalhaDeMonstros\\BatalhaDeMonstros.csproj": {}
   },
   "projects": {
-    "C:\\Users\\TaliaGoncalves\\Desktop\\DesingPattern\\BatalhaDeMonstros\\BatalhaDeMonstros.csproj": {
+    "C:\\Users\\Talia Gonçalves\\OneDrive\\Área de Trabalho\\DesingPattern\\BatalhaDeMonstros\\BatalhaDeMonstros.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TaliaGoncalves\\Desktop\\DesingPattern\\BatalhaDeMonstros\\BatalhaDeMonstros.csproj",
+        "projectUniqueName": "C:\\Users\\Talia Gonçalves\\OneDrive\\Área de Trabalho\\DesingPattern\\BatalhaDeMonstros\\BatalhaDeMonstros.csproj",
         "projectName": "BatalhaDeMonstros",
-        "projectPath": "C:\\Users\\TaliaGoncalves\\Desktop\\DesingPattern\\BatalhaDeMonstros\\BatalhaDeMonstros.csproj",
-        "packagesPath": "C:\\Users\\TaliaGoncalves\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TaliaGoncalves\\Desktop\\DesingPattern\\BatalhaDeMonstros\\obj\\",
+        "projectPath": "C:\\Users\\Talia Gonçalves\\OneDrive\\Área de Trabalho\\DesingPattern\\BatalhaDeMonstros\\BatalhaDeMonstros.csproj",
+        "packagesPath": "C:\\Users\\Talia Gonçalves\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Talia Gonçalves\\OneDrive\\Área de Trabalho\\DesingPattern\\BatalhaDeMonstros\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\TaliaGoncalves\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Talia Gonçalves\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
